@@ -1,0 +1,6 @@
+# Ignore OS generated files
+.github
+WebApi/.vs
+WebApi/coreWebAPI/bin
+WebApi/coreWebAPI/Migrations
+WebApi/coreWebAPI/obj
