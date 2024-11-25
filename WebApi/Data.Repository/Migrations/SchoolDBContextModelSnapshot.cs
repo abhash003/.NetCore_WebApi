@@ -2,19 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Data.Repository.DataBase;
+
 #nullable disable
 
-namespace coreWebAPI.Migrations
+namespace WebApi.Data.Repository.Migrations
 {
     [DbContext(typeof(SchoolDBContext))]
-    [Migration("20241124074015_Initial Migration1")]
-    partial class InitialMigration1
+    partial class SchoolDBContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,7 +21,7 @@ namespace coreWebAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("coreWebAPI.model.Address", b =>
+            modelBuilder.Entity("Data.Model.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,7 +45,7 @@ namespace coreWebAPI.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("coreWebAPI.model.Faculty", b =>
+            modelBuilder.Entity("Data.Model.Faculty", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -66,19 +64,24 @@ namespace coreWebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Subjectid")
+                    b.Property<int?>("StandardId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("Subjectid");
+                    b.HasIndex("StandardId");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("Faculties");
                 });
 
-            modelBuilder.Entity("coreWebAPI.model.Standard", b =>
+            modelBuilder.Entity("Data.Model.Standard", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,7 +89,7 @@ namespace coreWebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ClassteacherIdId")
+                    b.Property<int>("ClassTeacherId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -95,12 +98,12 @@ namespace coreWebAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClassteacherIdId");
+                    b.HasIndex("ClassTeacherId");
 
                     b.ToTable("Standards");
                 });
 
-            modelBuilder.Entity("coreWebAPI.model.Standard_Subject", b =>
+            modelBuilder.Entity("Data.Model.Standard_Subject", b =>
                 {
                     b.Property<int>("StandardId")
                         .HasColumnType("int");
@@ -113,7 +116,7 @@ namespace coreWebAPI.Migrations
                     b.ToTable("StandardSubjects");
                 });
 
-            modelBuilder.Entity("coreWebAPI.model.Student", b =>
+            modelBuilder.Entity("Data.Model.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -144,7 +147,7 @@ namespace coreWebAPI.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("coreWebAPI.model.Subject", b =>
+            modelBuilder.Entity("Data.Model.Subject", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -156,22 +159,31 @@ namespace coreWebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("StandardId")
+                        .HasColumnType("int");
+
                     b.HasKey("id");
+
+                    b.HasIndex("StandardId");
 
                     b.ToTable("subjects");
                 });
 
-            modelBuilder.Entity("coreWebAPI.model.Faculty", b =>
+            modelBuilder.Entity("Data.Model.Faculty", b =>
                 {
-                    b.HasOne("coreWebAPI.model.Address", "Address")
+                    b.HasOne("Data.Model.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("coreWebAPI.model.Subject", "Subject")
+                    b.HasOne("Data.Model.Standard", null)
+                        .WithMany("Faculties")
+                        .HasForeignKey("StandardId");
+
+                    b.HasOne("Data.Model.Subject", "Subject")
                         .WithMany()
-                        .HasForeignKey("Subjectid")
+                        .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -180,26 +192,26 @@ namespace coreWebAPI.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("coreWebAPI.model.Standard", b =>
+            modelBuilder.Entity("Data.Model.Standard", b =>
                 {
-                    b.HasOne("coreWebAPI.model.Faculty", "ClassteacherId")
+                    b.HasOne("Data.Model.Faculty", "ClassteacherId")
                         .WithMany()
-                        .HasForeignKey("ClassteacherIdId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("ClassTeacherId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ClassteacherId");
                 });
 
-            modelBuilder.Entity("coreWebAPI.model.Student", b =>
+            modelBuilder.Entity("Data.Model.Student", b =>
                 {
-                    b.HasOne("coreWebAPI.model.Address", "Address")
+                    b.HasOne("Data.Model.Address", "Address")
                         .WithMany()
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("coreWebAPI.model.Standard", "Standard")
+                    b.HasOne("Data.Model.Standard", "Standard")
                         .WithMany()
                         .HasForeignKey("StandardId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -208,6 +220,20 @@ namespace coreWebAPI.Migrations
                     b.Navigation("Address");
 
                     b.Navigation("Standard");
+                });
+
+            modelBuilder.Entity("Data.Model.Subject", b =>
+                {
+                    b.HasOne("Data.Model.Standard", null)
+                        .WithMany("subjects")
+                        .HasForeignKey("StandardId");
+                });
+
+            modelBuilder.Entity("Data.Model.Standard", b =>
+                {
+                    b.Navigation("Faculties");
+
+                    b.Navigation("subjects");
                 });
 #pragma warning restore 612, 618
         }
