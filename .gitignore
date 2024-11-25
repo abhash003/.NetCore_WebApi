@@ -4,3 +4,7 @@ WebApi/.vs
 WebApi/coreWebAPI/bin
 WebApi/coreWebAPI/Migrations
 WebApi/coreWebAPI/obj
+WebApi/Data.Model/bin
+WebApi/Data.Model/obj
+WebApi/Data.Repository/bin
+WebApi/Data.Repository/obj
