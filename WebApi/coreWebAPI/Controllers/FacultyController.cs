@@ -1,7 +1,7 @@
 ﻿using Data.Model;
 using Data.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Data.Repository.DataBase;
+using WebApi.Data.Repository.Repository.Faculties;
 
 namespace coreWebAPI.Controllers
 {
@@ -9,18 +9,18 @@ namespace coreWebAPI.Controllers
     [ApiController]
     public class FacultyController : ControllerBase
     {
-        private SchoolDBContext _dbContext;
+        private IFacultyRepository facultyRepository;
 
-        public FacultyController (SchoolDBContext dbContext) 
-        { 
-            _dbContext = dbContext;
+        public FacultyController(IFacultyRepository facultyRepository)
+        {
+            this.facultyRepository = facultyRepository;
         }
 
         [HttpGet]
         [Route("Getall")]
         public IActionResult GetAll()
         {
-            var faculty = _dbContext.Faculties.ToList();
+            var faculty = facultyRepository.GetAllFaculties();
 
             return Ok(faculty);
         }
@@ -29,7 +29,7 @@ namespace coreWebAPI.Controllers
         [Route("{id}")]
         public IActionResult Get(int id) 
         {
-            var faculty = _dbContext.Faculties.FirstOrDefault(x => x.Id == id);
+            var faculty = facultyRepository.GetFaculty(id);
 
             return Ok(faculty);
         }
@@ -40,15 +40,13 @@ namespace coreWebAPI.Controllers
         {
             var facultydomain = new Faculty
             {
-                Address = faculty.Address,
-                Subject = faculty.Subject,
+                AddressId = faculty.AddressId,
+                SubjectId = faculty.SubjectId,
                 Name = faculty.Name,
                 PhoneNo = faculty.PhoneNo
             };
 
-            _dbContext.Faculties.Add(facultydomain);
-
-            _dbContext.SaveChanges();
+            facultyRepository.CreateFaculty(facultydomain);
 
             return Ok(facultydomain);
         }
@@ -57,14 +55,19 @@ namespace coreWebAPI.Controllers
         [Route("Update/{id}")]
         public IActionResult Update([FromBody] FacultyDTO faculty, int id)
         {
-            var facultyDomain = _dbContext.Faculties.FirstOrDefault(x => x.Id==id);
+            var facultyDomain = facultyRepository.GetFaculty(id);
 
-            facultyDomain.Address = faculty.Address;
-            facultyDomain.Subject = faculty.Subject;
+            if(facultyDomain == null)
+            {
+                return NotFound();
+            }
+
+            facultyDomain.AddressId = faculty.AddressId;
+            facultyDomain.SubjectId = faculty.SubjectId;
             facultyDomain.PhoneNo = faculty.PhoneNo;
             facultyDomain.Name = faculty.Name;
             
-            _dbContext.SaveChanges();
+            facultyRepository.UpdateFaculty(facultyDomain);
 
             return Ok(facultyDomain);
         }

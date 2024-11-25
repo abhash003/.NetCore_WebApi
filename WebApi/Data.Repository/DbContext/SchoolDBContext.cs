@@ -30,22 +30,10 @@ namespace WebApi.Data.Repository.DataBase
                 .HasKey(ss => new { ss.StandardId, ss.SubjectId });
 
             modelBuilder.Entity<Standard>()
-            .HasOne(s => s.ClassteacherId)
+            .HasOne(s => s.ClassTeacher)
             .WithMany()
             .HasForeignKey(s => s.ClassTeacherId)
             .OnDelete(DeleteBehavior.Restrict);
-
-            // Configuring the many-to-many relationship between Standard and Subject
-            modelBuilder.Entity<Standard>()
-                .HasMany(s => s.subjects)
-                .WithMany()
-                .UsingEntity(j => j.ToTable("Subject"));
-
-            // Configuring the many-to-many relationship between Standard and Faculty
-            modelBuilder.Entity<Standard>()
-                .HasMany(s => s.Faculties)
-                .WithMany()
-                .UsingEntity(j => j.ToTable("Faculty"));
         }
 
     }

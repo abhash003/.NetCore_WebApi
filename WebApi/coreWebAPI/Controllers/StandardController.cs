@@ -2,6 +2,8 @@
 using Data.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Data.Repository.DataBase;
+using WebApi.Data.Repository.Repository.Faculties;
+using WebApi.Data.Repository.Repository.Standards;
 
 namespace coreWebAPI.Controllers
 {
@@ -9,18 +11,18 @@ namespace coreWebAPI.Controllers
     [ApiController]
     public class StandardController : ControllerBase
     {
-        private SchoolDBContext _dbContext;
+        private IStandardRepository standardRepository;
 
-        public StandardController(SchoolDBContext dBContext)
+        public StandardController(IStandardRepository standardRepository)
         {
-            _dbContext = dBContext;
+            this.standardRepository = standardRepository;
         }
 
         [HttpGet]
         [Route("GetAll")]
         public IActionResult GetAllStandard()
         {
-            var standardList = _dbContext.Standards.ToList();
+            var standardList = standardRepository.GetAllStandards();
 
             return Ok(standardList);
         }
@@ -29,14 +31,14 @@ namespace coreWebAPI.Controllers
         [Route("{id}")]
         public IActionResult GetStandard(int id)
         {
-            var standardList = _dbContext.Standards.FirstOrDefault(x => x.Id == id);
+            var standardList = standardRepository.GetStandard(id);
 
             return Ok(standardList);
         }
 
         [HttpPost]
         [Route("create")]
-        public IActionResult CreateAddress([FromBody] StandardDTO standard)
+        public IActionResult CreateStandard([FromBody] StandardDTO standard)
         {
             var standardDomainModel = new Standard
             {
@@ -44,17 +46,16 @@ namespace coreWebAPI.Controllers
                 ClassTeacherId = standard.ClassTeacherId
             };
 
-            _dbContext.Standards.Add(standardDomainModel);
-            _dbContext.SaveChanges();
+            standardRepository.CreateStandard(standardDomainModel);
 
             return Ok(standardDomainModel);
         }
 
         [HttpPut]
         [Route("edit/{id}")]
-        public IActionResult UpdateAddress([FromBody] StandardDTO standard, int id)
+        public IActionResult UpdateStandard([FromBody] StandardDTO standard, int id)
         {
-            var standardDomain = _dbContext.Standards.Find(id);
+            var standardDomain = standardRepository.GetStandard(id);
 
             if (standardDomain == null)
             {
@@ -63,7 +64,7 @@ namespace coreWebAPI.Controllers
             standardDomain.Name = standard.Name;
             standardDomain.ClassTeacherId = standard.ClassTeacherId;
 
-            _dbContext.SaveChanges();
+            standardRepository.UpdateStandard(standardDomain);
 
             return Ok(standardDomain);
 

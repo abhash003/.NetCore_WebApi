@@ -18,18 +18,18 @@ namespace coreWebAPI.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var Students = studentRepository.GetAllStudents();
+            var Students = await studentRepository.GetAllStudentsAsync();
 
             return Ok(Students);
         }
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var student = studentRepository.GetStudent(id);
+            var student = await studentRepository.GetStudentAsync(id);
             if (student == null)
             {
                 return NotFound();
@@ -59,7 +59,7 @@ namespace coreWebAPI.Controllers
         [Route("Update/{id}")]
         public IActionResult Update([FromBody] StudentDTO student, int id)
         {
-            var studentDomain = studentRepository.GetStudent(id);
+            var studentDomain = studentRepository.GetStudentAsync(id).Result;
             //var Address = standa
             if (studentDomain == null)
             {

@@ -10,7 +10,7 @@ namespace Data.Model
         public string Name { get; set; }
 
         public int ClassTeacherId { get; set; }
-        public Faculty ClassteacherId { get; set; }
+        public Faculty ClassTeacher { get; set; }
 
         public List<Subject> subjects { get; set; }
 
