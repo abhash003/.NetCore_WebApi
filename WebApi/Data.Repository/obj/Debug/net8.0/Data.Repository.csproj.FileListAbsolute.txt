@@ -1,0 +1,16 @@
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\obj\Debug\net8.0\Data.Repository.csproj.AssemblyReference.cache
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\obj\Debug\net8.0\Data.Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\obj\Debug\net8.0\Data.Repository.AssemblyInfoInputs.cache
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\obj\Debug\net8.0\Data.Repository.AssemblyInfo.cs
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\obj\Debug\net8.0\Data.Repository.csproj.CoreCompileInputs.cache
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\obj\Debug\net8.0\Data.Repository.sourcelink.json
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\bin\Debug\net8.0\WebApi.Data.Repository.deps.json
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\bin\Debug\net8.0\WebApi.Data.Repository.dll
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\bin\Debug\net8.0\WebApi.Data.Repository.pdb
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\bin\Debug\net8.0\Data.Model.dll
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\bin\Debug\net8.0\Data.Model.pdb
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\obj\Debug\net8.0\Data.Rep.ED3C85B5.Up2Date
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\obj\Debug\net8.0\WebApi.Data.Repository.dll
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\obj\Debug\net8.0\refint\WebApi.Data.Repository.dll
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\obj\Debug\net8.0\WebApi.Data.Repository.pdb
+C:\Users\abkumar\OneDrive - symplr\Desktop\projects\.NetCoreWebApi\WebApi\Data.Repository\obj\Debug\net8.0\ref\WebApi.Data.Repository.dll

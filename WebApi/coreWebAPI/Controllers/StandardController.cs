@@ -1,8 +1,7 @@
-﻿using coreWebAPI.DataBase;
-using coreWebAPI.DTO;
-using coreWebAPI.model;
-using Microsoft.AspNetCore.Http;
+﻿using Data.Model;
+using Data.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Data.Repository.DataBase;
 
 namespace coreWebAPI.Controllers
 {
@@ -42,9 +41,7 @@ namespace coreWebAPI.Controllers
             var standardDomainModel = new Standard
             {
                 Name = standard.Name,
-                ClassteacherId = standard.ClassteacherId,
-                ClassTeacherName = standard.ClassTeacherName,
-                subjects = standard.subjects
+                ClassTeacherId = standard.ClassTeacherId
             };
 
             _dbContext.Standards.Add(standardDomainModel);
@@ -64,8 +61,7 @@ namespace coreWebAPI.Controllers
                 return NotFound();
             }
             standardDomain.Name = standard.Name;
-            standardDomain.ClassteacherId = standard.ClassteacherId;
-            standardDomain.ClassTeacherName = standard.ClassTeacherName;
+            standardDomain.ClassTeacherId = standard.ClassTeacherId;
 
             _dbContext.SaveChanges();
 

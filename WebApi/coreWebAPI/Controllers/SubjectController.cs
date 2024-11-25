@@ -1,8 +1,7 @@
-﻿using coreWebAPI.DataBase;
-using coreWebAPI.DTO;
-using coreWebAPI.model;
-using Microsoft.AspNetCore.Http;
+﻿using Data.Model;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Data.Repository.DataBase;
+using WebApi.Data.Repository.Repository.Students;
 
 namespace coreWebAPI.Controllers
 {
@@ -10,61 +9,61 @@ namespace coreWebAPI.Controllers
     [ApiController]
     public class SubjectController : ControllerBase
     {
-        private SchoolDBContext _dbContext;
+        private IStudentRepository studentRepository;
 
-        public SubjectController(SchoolDBContext dbContext)
+        public SubjectController(IStudentRepository studentRepository)
         {
-            _dbContext = dbContext;
+            this.studentRepository = studentRepository;
         }
 
         [HttpGet]
         [Route("GetAll")]
         public IActionResult GetAll()
         {
-            var subject = _dbContext.subjects.ToList();
+            var Students = studentRepository.GetAllStudents();
 
-            return Ok(subject);
+            return Ok(Students);
         }
 
 
-        [HttpGet]
-        [Route("{id}")]
-        public IActionResult Get(int id) 
-        {
-            var Subject = _dbContext.subjects.SingleOrDefault(x => x.id == id);
+        //[HttpGet]
+        //[Route("{id}")]
+        //public IActionResult Get(int id) 
+        //{
+        //    var Subject = _dbContext.subjects.SingleOrDefault(x => x.id == id);
 
-            if (Subject == null)
-            {
-                return NotFound();
-            }
+        //    if (Subject == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(Subject);
-        }
+        //    return Ok(Subject);
+        //}
 
-        [HttpPost]
-        [Route("Create")]
-        public IActionResult Create([FromBody] SubjectDTO subject)
-        {
-            var newSub = new Subject
-            {
-                Name = subject.Name,
-            };
+        //[HttpPost]
+        //[Route("Create")]
+        //public IActionResult Create([FromBody] SubjectDTO subject)
+        //{
+        //    var newSub = new Subject
+        //    {
+        //        Name = subject.Name,
+        //    };
 
-            _dbContext.subjects.Add(newSub);
-            _dbContext.SaveChanges();
-            return Ok(subject);
-        }
+        //    _dbContext.subjects.Add(newSub);
+        //    _dbContext.SaveChanges();
+        //    return Ok(subject);
+        //}
 
-        [HttpPut]
-        [Route("Update/{id}")]
-        public IActionResult UpdateSubject([FromBody] SubjectDTO subject, int id) 
-        {
-            var sub = _dbContext.subjects.SingleOrDefault(x => x.id == id);
+        //[HttpPut]
+        //[Route("Update/{id}")]
+        //public IActionResult UpdateSubject([FromBody] SubjectDTO subject, int id) 
+        //{
+        //    var sub = _dbContext.subjects.SingleOrDefault(x => x.id == id);
 
-            sub.Name = subject.Name;
+        //    sub.Name = subject.Name;
 
-            _dbContext.SaveChanges();
-            return Ok(subject);
-        }
+        //    _dbContext.SaveChanges();
+        //    return Ok(subject);
+        //}
     }
 }

@@ -1,5 +1,5 @@
-﻿using coreWebAPI.DataBase;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using WebApi.Data.Repository.DataBase;
 
 namespace coreWebAPI.Extensions
 {

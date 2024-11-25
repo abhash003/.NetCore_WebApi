@@ -1,5 +1,6 @@
-using coreWebAPI.DataBase;
 using coreWebAPI.Extensions;
+using WebApi.Data.Repository.DataBase;
+using WebApi.Data.Repository.Repository.Students;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.DBContextExtension<SchoolDBContext>(builder.Configuration);
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
 var app = builder.Build();
 

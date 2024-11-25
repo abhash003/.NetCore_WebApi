@@ -1,8 +1,7 @@
-﻿using coreWebAPI.DataBase;
-using coreWebAPI.DTO;
-using coreWebAPI.model;
-using Microsoft.AspNetCore.Http;
+﻿using Data.Model;
+using Data.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Data.Repository.DataBase;
 
 namespace coreWebAPI.Controllers
 {

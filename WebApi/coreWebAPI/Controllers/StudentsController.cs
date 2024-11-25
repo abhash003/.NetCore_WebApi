@@ -1,7 +1,7 @@
-﻿using coreWebAPI.DataBase;
-using coreWebAPI.DTO;
-using coreWebAPI.model;
+﻿using Data.Model;
+using Data.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Data.Repository.Repository.Students;
 
 namespace coreWebAPI.Controllers
 {
@@ -9,28 +9,29 @@ namespace coreWebAPI.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private SchoolDBContext _dbContext;
+        private IStudentRepository studentRepository;
 
-        public StudentsController (SchoolDBContext dbContext)
+        public StudentsController (IStudentRepository studentRepository)
         {
-            _dbContext = dbContext;
+            this.studentRepository = studentRepository;
         }
 
         [HttpGet]
         [Route("GetAll")]
         public IActionResult GetAll()
         {
-            var student = _dbContext.Students.ToList();
+            var Students = studentRepository.GetAllStudents();
 
-            return Ok(student);
+            return Ok(Students);
         }
 
         [HttpGet]
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            var student = _dbContext.Students.FirstOrDefault(x => x.Id == id);
-            if (student == null) { 
+            var student = studentRepository.GetStudent(id);
+            if (student == null)
+            {
                 return NotFound();
             }
 
@@ -44,33 +45,34 @@ namespace coreWebAPI.Controllers
             var studentDomain = new Student
             {
                 Name = student.Name,
-                Standard = student.Standard,
-                Address = student.Address,
+                StandardId = student.StandardId,
+                AddressId = student.AddressId,
                 PhoneNO = student.PhoneNO
             };
 
-            _dbContext.Students.Add(studentDomain);
-            _dbContext.SaveChanges();
+            studentRepository.CreateStudent(studentDomain);
 
             return Ok(student);
         }
 
         [HttpPut]
         [Route("Update/{id}")]
-        public IActionResult Update([FromBody] StudentDTO student, int id) 
+        public IActionResult Update([FromBody] StudentDTO student, int id)
         {
-            var studentDomain = _dbContext.Students.FirstOrDefault(y => y.Id == id);
+            var studentDomain = studentRepository.GetStudent(id);
+            //var Address = standa
             if (studentDomain == null)
             {
                 return NotFound();
             }
 
-            studentDomain.Standard = student.Standard;
-            studentDomain.Address = student.Address;
+            studentDomain.AddressId = student.AddressId;
+            studentDomain.StandardId = student.StandardId;
             studentDomain.PhoneNO = student.PhoneNO;
             studentDomain.Name = student.Name;
 
-            _dbContext.SaveChanges();
+            studentRepository.UpdateStudent(studentDomain);
+
             return Ok(studentDomain);
         }
 
