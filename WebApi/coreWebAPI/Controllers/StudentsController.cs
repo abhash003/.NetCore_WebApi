@@ -1,6 +1,8 @@
 ﻿using Data.Model;
 using Data.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Data.Repository.Repository.Addresses;
+using WebApi.Data.Repository.Repository.Standards;
 using WebApi.Data.Repository.Repository.Students;
 
 namespace coreWebAPI.Controllers
@@ -10,10 +12,14 @@ namespace coreWebAPI.Controllers
     public class StudentsController : ControllerBase
     {
         private IStudentRepository studentRepository;
+        private IStandardRepository standardRepository;
+        private IAddressRepository addressRepository;
 
-        public StudentsController (IStudentRepository studentRepository)
+        public StudentsController (IStudentRepository studentRepository, IStandardRepository standardRepository, IAddressRepository addressRepository)
         {
             this.studentRepository = studentRepository;
+            this.standardRepository = standardRepository;
+            this.addressRepository = addressRepository;
         }
 
         [HttpGet]
@@ -21,6 +27,12 @@ namespace coreWebAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             var Students = await studentRepository.GetAllStudentsAsync();
+
+            foreach (var item in Students)
+            {
+                item.Address = addressRepository.GetAddress(item.AddressId);
+                item.Standard = standardRepository.GetStandard(item.StandardId);
+            }
 
             return Ok(Students);
         }
@@ -52,7 +64,7 @@ namespace coreWebAPI.Controllers
 
             studentRepository.CreateStudent(studentDomain);
 
-            return Ok(student);
+            return Ok(studentDomain);
         }
 
         [HttpPut]
