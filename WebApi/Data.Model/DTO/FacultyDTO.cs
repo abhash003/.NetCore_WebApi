@@ -1,5 +1,4 @@
-﻿using Data.Model;
-
+﻿
 namespace Data.Model.DTO
 {
     public class FacultyDTO

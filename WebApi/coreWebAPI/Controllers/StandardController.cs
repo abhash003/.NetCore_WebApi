@@ -1,8 +1,6 @@
 ﻿using Data.Model;
 using Data.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Data.Repository.DataBase;
-using WebApi.Data.Repository.Repository.Faculties;
 using WebApi.Data.Repository.Repository.Standards;
 
 namespace coreWebAPI.Controllers
