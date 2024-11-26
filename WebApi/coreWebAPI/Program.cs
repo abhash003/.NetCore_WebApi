@@ -1,6 +1,7 @@
 using coreWebAPI.Extensions;
 using WebApi.Data.Repository.DataBase;
 using WebApi.Data.Repository.Repository.Addresses;
+using WebApi.Data.Repository.Repository.Authoriztion;
 using WebApi.Data.Repository.Repository.Faculties;
 using WebApi.Data.Repository.Repository.Standards;
 using WebApi.Data.Repository.Repository.Students;
@@ -22,6 +23,7 @@ builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
 builder.Services.AddScoped<IFacultyRepository, FacultyRepository>();
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IStandardRepository, StandardRepository>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 var app = builder.Build();
 

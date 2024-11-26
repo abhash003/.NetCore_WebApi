@@ -1,10 +1,4 @@
 ﻿using Data.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using WebApi.Data.Repository.DataBase;
 
 namespace WebApi.Data.Repository.Repository.Subjects
@@ -20,22 +14,22 @@ namespace WebApi.Data.Repository.Repository.Subjects
 
         public Subject GetSubject(int id)
         {
-            var subject = _schoolDBContext.subjects.FirstOrDefault(x => x.id == id);
+            var subject = _schoolDBContext.Subjects.FirstOrDefault(x => x.id == id);
 
             return subject;
         }
 
         public List<Subject> GetAllSubjects()
         {
-            var subjects = _schoolDBContext.subjects.ToList();
+            var subjects = _schoolDBContext.Subjects.ToList();
 
             return subjects;
         }
 
-        public void CreateSubject(Subject subject)
+        public async Task CreateSubjectAsync(Subject subject)
         {
-            _schoolDBContext.subjects.Add(subject);
-            _schoolDBContext.SaveChanges();
+            await _schoolDBContext.Subjects.AddAsync(subject);
+            await _schoolDBContext.SaveChangesAsync();
         }
 
 

@@ -8,7 +8,7 @@ namespace WebApi.Data.Repository.Repository.Subjects
 
         Subject GetSubject(int id);
 
-        void CreateSubject(Subject subject);
+        Task CreateSubjectAsync(Subject subject);
 
         void UpdateSubject(Subject subject);
 

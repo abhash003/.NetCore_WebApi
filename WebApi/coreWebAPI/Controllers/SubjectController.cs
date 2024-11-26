@@ -49,7 +49,7 @@ namespace coreWebAPI.Controllers
                 Name = subject.Name,
             };
 
-            subjectRepository.CreateSubject(newSub);
+            subjectRepository.CreateSubjectAsync(newSub);
             return Ok(subject);
         }
 

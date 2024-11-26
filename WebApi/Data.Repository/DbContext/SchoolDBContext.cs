@@ -17,7 +17,13 @@ namespace WebApi.Data.Repository.DataBase
 
         public DbSet<Address> Addresses {  get; set; }
 
-        public DbSet<Subject> subjects { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+
+        public DbSet<Users> Users { get; set; }
+
+        public DbSet<Roles> Roles { get; set; }
+
+        public DbSet<User_Roles> User_Roles { get; set; }
 
         public DbSet<Standard_Subject> StandardSubjects { get; set; }
 
@@ -28,6 +34,9 @@ namespace WebApi.Data.Repository.DataBase
             // Define composite primary key for Standard_Subject
             modelBuilder.Entity<Standard_Subject>()
                 .HasKey(ss => new { ss.StandardId, ss.SubjectId });
+
+            modelBuilder.Entity<User_Roles>()
+                .HasKey(ss => new { ss.RolesId, ss.UserId });
 
             modelBuilder.Entity<Standard>()
             .HasOne(s => s.ClassTeacher)
