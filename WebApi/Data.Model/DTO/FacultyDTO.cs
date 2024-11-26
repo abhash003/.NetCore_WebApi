@@ -1,5 +1,4 @@
-﻿using Data.Model;
-
+﻿
 namespace Data.Model.DTO
 {
     public class FacultyDTO
@@ -8,8 +7,9 @@ namespace Data.Model.DTO
 
         public string PhoneNo { get; set; }
 
-        public Address Address { get; set; }
+        public int AddressId { get; set; }
 
-        public Subject Subject { get; set; }
+        public int SubjectId { get; set; }
+
     }
 }

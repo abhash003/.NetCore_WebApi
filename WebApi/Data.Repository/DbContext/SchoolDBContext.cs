@@ -17,7 +17,13 @@ namespace WebApi.Data.Repository.DataBase
 
         public DbSet<Address> Addresses {  get; set; }
 
-        public DbSet<Subject> subjects { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+
+        public DbSet<Users> Users { get; set; }
+
+        public DbSet<Roles> Roles { get; set; }
+
+        public DbSet<User_Roles> User_Roles { get; set; }
 
         public DbSet<Standard_Subject> StandardSubjects { get; set; }
 
@@ -29,23 +35,14 @@ namespace WebApi.Data.Repository.DataBase
             modelBuilder.Entity<Standard_Subject>()
                 .HasKey(ss => new { ss.StandardId, ss.SubjectId });
 
+            modelBuilder.Entity<User_Roles>()
+                .HasKey(ss => new { ss.RolesId, ss.UserId });
+
             modelBuilder.Entity<Standard>()
-            .HasOne(s => s.ClassteacherId)
+            .HasOne(s => s.ClassTeacher)
             .WithMany()
             .HasForeignKey(s => s.ClassTeacherId)
             .OnDelete(DeleteBehavior.Restrict);
-
-            // Configuring the many-to-many relationship between Standard and Subject
-            modelBuilder.Entity<Standard>()
-                .HasMany(s => s.subjects)
-                .WithMany()
-                .UsingEntity(j => j.ToTable("Subject"));
-
-            // Configuring the many-to-many relationship between Standard and Faculty
-            modelBuilder.Entity<Standard>()
-                .HasMany(s => s.Faculties)
-                .WithMany()
-                .UsingEntity(j => j.ToTable("Faculty"));
         }
 
     }

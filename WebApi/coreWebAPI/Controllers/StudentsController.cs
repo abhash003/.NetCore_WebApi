@@ -1,6 +1,8 @@
 ﻿using Data.Model;
 using Data.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Data.Repository.Repository.Addresses;
+using WebApi.Data.Repository.Repository.Standards;
 using WebApi.Data.Repository.Repository.Students;
 
 namespace coreWebAPI.Controllers
@@ -10,26 +12,36 @@ namespace coreWebAPI.Controllers
     public class StudentsController : ControllerBase
     {
         private IStudentRepository studentRepository;
+        private IStandardRepository standardRepository;
+        private IAddressRepository addressRepository;
 
-        public StudentsController (IStudentRepository studentRepository)
+        public StudentsController (IStudentRepository studentRepository, IStandardRepository standardRepository, IAddressRepository addressRepository)
         {
             this.studentRepository = studentRepository;
+            this.standardRepository = standardRepository;
+            this.addressRepository = addressRepository;
         }
 
         [HttpGet]
         [Route("GetAll")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var Students = studentRepository.GetAllStudents();
+            var Students = await studentRepository.GetAllStudentsAsync();
+
+            foreach (var item in Students)
+            {
+                item.Address = addressRepository.GetAddress(item.AddressId);
+                item.Standard = standardRepository.GetStandard(item.StandardId);
+            }
 
             return Ok(Students);
         }
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var student = studentRepository.GetStudent(id);
+            var student = await studentRepository.GetStudentAsync(id);
             if (student == null)
             {
                 return NotFound();
@@ -52,14 +64,14 @@ namespace coreWebAPI.Controllers
 
             studentRepository.CreateStudent(studentDomain);
 
-            return Ok(student);
+            return Ok(studentDomain);
         }
 
         [HttpPut]
         [Route("Update/{id}")]
         public IActionResult Update([FromBody] StudentDTO student, int id)
         {
-            var studentDomain = studentRepository.GetStudent(id);
+            var studentDomain = studentRepository.GetStudentAsync(id).Result;
             //var Address = standa
             if (studentDomain == null)
             {

@@ -12,16 +12,16 @@ namespace WebApi.Data.Repository.Repository.Students
             _schoolDBContext = dBContext;
         }
 
-        public List<Student> GetAllStudents()
+        public async Task<List<Student>> GetAllStudentsAsync()
         {
-            var student = _schoolDBContext.Students.ToList();
+            var student = await _schoolDBContext.Students.ToListAsync();
 
             return student;
         }
 
-        public Student GetStudent(int id)
+        public async Task<Student> GetStudentAsync(int id)
         {
-            var student = _schoolDBContext.Students.FirstOrDefault(x => x.Id == id);
+            var student = await _schoolDBContext.Students.Include(x => x.StandardId).Include(x => x.AddressId).FirstOrDefaultAsync(x => x.Id == id);
 
             return student;
         }

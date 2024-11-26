@@ -6,9 +6,9 @@ namespace WebApi.Data.Repository.Repository.Students
     public interface IStudentRepository
     {
 
-        List<Student> GetAllStudents();
+        Task<List<Student>?> GetAllStudentsAsync();
 
-        Student GetStudent(int id);
+        Task<Student> GetStudentAsync(int id);
 
         void CreateStudent(Student student);
 

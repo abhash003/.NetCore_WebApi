@@ -2,6 +2,8 @@
 using Data.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Data.Repository.DataBase;
+using WebApi.Data.Repository.Repository.Addresses;
+using WebApi.Data.Repository.Repository.Standards;
 
 namespace coreWebAPI.Controllers
 {
@@ -9,18 +11,18 @@ namespace coreWebAPI.Controllers
     [ApiController]
     public class AddressController : ControllerBase
     {
-        private SchoolDBContext _dbContext;
+        private IAddressRepository addressRepository;
 
-        public AddressController(SchoolDBContext dBContext) 
+        public AddressController(IAddressRepository addressRepository)
         {
-            _dbContext = dBContext;
+            this.addressRepository = addressRepository;
         }
 
         [HttpGet]
         [Route("GetAll")]
         public IActionResult GetAllAddress()
         {
-            var addressList = _dbContext.Addresses.ToList();
+            var addressList = addressRepository.GetAllAddresses();
 
             return Ok(addressList);
         }
@@ -29,7 +31,7 @@ namespace coreWebAPI.Controllers
         [Route ("{id}") ]
         public IActionResult GetAddress(int id)
         {
-            var addressList = _dbContext.Addresses.FirstOrDefault(x => x.Id == id);
+            var addressList = addressRepository.GetAddress(id);
             
             return Ok(addressList);
         }
@@ -45,8 +47,7 @@ namespace coreWebAPI.Controllers
                 PostalCode = address.PostalCode,
             };
 
-            _dbContext.Addresses.Add(AddressDomainModel);
-            _dbContext.SaveChanges();
+            addressRepository.CreateAddress(AddressDomainModel);
 
             return Ok(AddressDomainModel);
         }
@@ -55,7 +56,7 @@ namespace coreWebAPI.Controllers
         [Route("edit/{id}")]
         public IActionResult UpdateAddress([FromBody] AddressDTO address, int id)
         {
-            var addressDomain = _dbContext.Addresses.Find(id);
+            var addressDomain = addressRepository.GetAddress(id);
 
             if(addressDomain == null)
             {
@@ -65,7 +66,7 @@ namespace coreWebAPI.Controllers
             addressDomain.PostalCode = address.PostalCode;
             addressDomain.City = address.City;
 
-            _dbContext.SaveChanges();
+            addressRepository.UpdateAddress(addressDomain);
 
             return Ok(addressDomain);
 
