@@ -31,8 +31,8 @@ namespace coreWebAPI.Controllers
 
             if (user != null && PasswordHelper.VerifyPassword(Password, user.Password))
             {
-                return Content("User is Valid");
-                //Jwt Token code and return the same
+                JwtTokenHelper jwtToken = new JwtTokenHelper();
+                return Content(jwtToken.CreateJwtToken(user, authRepository.GetRolesForUser(user).Result));
             }
 
             return Content("Invalid UserName or Password");

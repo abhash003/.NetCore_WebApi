@@ -1,5 +1,6 @@
 ﻿using Data.Model;
 using Data.Model.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Data.Repository.Repository.Addresses;
 using WebApi.Data.Repository.Repository.Standards;
@@ -24,6 +25,7 @@ namespace coreWebAPI.Controllers
 
         [HttpGet]
         [Route("GetAll")]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             var Students = await studentRepository.GetAllStudentsAsync();

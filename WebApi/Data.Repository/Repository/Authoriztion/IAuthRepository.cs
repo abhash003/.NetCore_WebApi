@@ -19,5 +19,9 @@ namespace WebApi.Data.Repository.Repository.Authoriztion
         Task AddRolesAsync(Roles role);
 
         Task MapRolesWithUser(User_Roles user_Roles);
+
+        Task<IEnumerable<string>> GetRolesForUser(Users user);
+
+        Task<Users> GetUserAsync(int id);
     }
 }
